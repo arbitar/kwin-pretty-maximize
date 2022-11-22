@@ -1,0 +1,23 @@
+{
+	"KPlugin": {
+		"Name": "Pretty Maximize",
+		"Description": "Offers an intermediate customizable stage of maximization",
+		"Icon": "preferences-system-windows",
+		
+		"Authors": [
+			{
+				"Email": "kwin-pretty-maximize@arbi.in",
+				"Name": "arbitar"
+			}
+		],
+		"Id": "kswin-pretty-maximize",
+		"ServiceTypes": [
+			"KWin/Script"
+		],
+		"Version": "1.0",
+		"Licsense": "GPLv3",
+		"Website": "https://github.com/arbitar/kwin-pretty-maximize"
+	},
+	"X-Plasma-API": "javascript",
+	"X-Plasma-MainScript": "code/main.js"
+}
