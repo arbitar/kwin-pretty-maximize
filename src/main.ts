@@ -489,7 +489,7 @@ class Client {
 
 			// if it didn't just come from micro-maximized,
 			// then micro-maximize it
-			this.setRealWindowTo(State.PADDED|State.MAXIMIZED);
+			this.setRealWindowTo(State.PADDED | State.MAXIMIZED);
 			return;
 		}
 
@@ -510,7 +510,29 @@ class Client {
 			// window was just prompted to quicktile!
 			// (warn: possibly from another quicktile state)
 
-			if (fell(State.FREE) || !was(State.PADDED)) {
+			if (!was(State.QUICKTILED)) {
+				// if this wasn't quicktiled already, then just pad to the new direction we got
+				this.setRealWindowTo(State.PADDED | (newSt & State.QT_ANY));
+				return;
+			}
+
+			// we came from another quicktile state...
+
+			// was it an opposite quicktile state?
+			const oppositeMove = (
+						(fell(State.QT_LEFT) && rose(State.QT_RIGHT))
+				|| (fell(State.QT_RIGHT) && rose(State.QT_LEFT))
+				|| (fell(State.QT_BOTTOM) && rose(State.QT_TOP))
+				|| (fell(State.QT_TOP) && rose(State.QT_BOTTOM))
+			);
+				
+			if (oppositeMove) {
+				// it was an opposite move. treat this like coming from a non-qt state
+				this.setRealWindowTo(State.PADDED | (newSt & State.QT_ANY));
+				return;
+			}
+
+			if (!was(State.PADDED)) {
 				// we came from a non-quicktiled, non-padded state
 				// .. snap to current quicktile
 				this.setRealWindowTo(newSt & State.QT_ANY);
